@@ -124,6 +124,17 @@ function About() {
 Building technology<br /><em>for the real world.</em></>} copy="LakeX is an AI-first technology company focused on turning ideas and real-world problems into practical technology solutions. We build across Artificial Intelligence, Software, Mobile Applications, IoT, Smart Hardware, Data, and Creative Technology, helping businesses, organizations, and individuals use emerging technology in meaningful ways." /><div className="about-visual"><div className="signal-grid" /><div className="signal-ring ring-large" /><div className="signal-ring ring-small" /><div className="signal-core"><span>LKX</span><i /></div><p>AI-FIRST / FUTURE READY</p><span className="visual-coordinate">Starting from Kerala<br />Built for a global mindset</span></div></div><div className="stat-row">{['AI-first', 'Software', 'Mobile apps', 'IoT & data'].map((stat, index) => <div className="stat" key={stat}><span>0{index + 1}</span><strong>{stat}</strong><ArrowUpRight size={16} /></div>)}</div></section>
 }
 
+function Team() {
+  const ref = useReveal()
+  const members = [
+    ['01', 'Full stack development', 'Anandu & Jithin'],
+    ['02', 'Android / iOS app development', 'Akash & Ahad'],
+    ['03', 'Creative technology', 'Abhinav & Abhimanue'],
+    ['04', 'Hardware and IoT', 'Yaseen'],
+  ]
+  return <section className="team section" id="team" ref={ref}><div className="container"><div className="team-header"><SectionIntro kicker="The people behind LAKEX" title={<>Our <em>team.</em></>} /><div className="team-photo" aria-label="Group photo space"><span>GROUP PHOTO</span></div></div><div className="team-grid">{members.map(([number, responsibility, names]) => <article className="team-card" key={number}><span className="team-number">{number}</span><h3>{responsibility}</h3><p>{names}</p></article>)}</div></div></section>
+}
+
 function Services() {
   const ref = useReveal()
   return <section className="services section" id="services" ref={ref}><div className="container"><SectionIntro kicker="Capabilities" title="What We Do" copy="We turn ideas into intelligent technology. At LakeX, we combine AI, software, hardware, and creative technology to build practical solutions for real-world needs." /><div className="services-list">{services.map((service) => <article className="service-row" key={service.number}><span className="service-number">{service.number}</span><div className="service-name"><h3>{service.title}</h3><p>{service.text}</p></div><span className="service-tag">{service.tag}</span><span className="service-plus"><Plus size={20} /></span></article>)}</div></div></section>
@@ -194,7 +205,7 @@ function Footer() {
 }
 
 function App() {
-  return <><Navbar /><main><Hero /><About /><Services /><Projects /><Process /><WhyLakex /><Contact /></main><Footer /></>
+  return <><Navbar /><main><Hero /><About /><Team /><Services /><Projects /><Process /><WhyLakex /><Contact /></main><Footer /></>
 }
 
 createRoot(document.getElementById('root')).render(<StrictMode><App /></StrictMode>)
