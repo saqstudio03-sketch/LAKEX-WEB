@@ -59,7 +59,7 @@ function Navbar() {
       frame = window.requestAnimationFrame(() => {
         const scrollY = window.scrollY
         setScrolled(scrollY > 30)
-        setMorphed(scrollY > window.innerHeight * 0.7)
+        setMorphed(scrollY > 30)
         frame = 0
       })
     }
