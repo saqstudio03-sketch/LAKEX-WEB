@@ -258,7 +258,8 @@ body::before { opacity: .018; }
 
 @media (max-width: 480px) {
   .services-list { grid-template-columns: 1fr; }
-  .service-row { height: 165px; min-height: 0; }
+  .service-row { height: 190px; min-height: 0; }
+  .service-name p { display: -webkit-box; margin-top: 8px; max-width: 100%; overflow: hidden; font-size: 11px; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 }
 
 @media (min-width: 851px) {
