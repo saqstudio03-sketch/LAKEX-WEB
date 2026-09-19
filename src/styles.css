@@ -79,6 +79,13 @@ em { font-style: normal; color: var(--lime); }
 @media (max-width: 480px) { .nav-inner { height: 72px; }.logo { font-size: 14px; }.hero { min-height: 680px; }.hero-content { padding-top: 30px; }.hero-title { font-size: clamp(40px, 12.3vw, 61px); }.hero-actions { width: 100%; flex-direction: column; }.button { width: 100%; }.about-visual { height: 330px; }.ring-large { width: 240px; height: 145px; }.ring-small { width: 145px; height: 260px; }.service-row { grid-template-columns: 12% 1fr 10%; }.service-plus { justify-self: end; }.process-grid { grid-template-columns: 1fr; }.process-step { min-height: 135px; }.process-step h3 { margin-top: 18px; }.form-row { gap: 15px; grid-template-columns: 1fr; }.form-row label { border-bottom: 1px solid var(--line); }.footer-top { grid-template-columns: 1fr 1fr; }.footer-top .logo { grid-column: 1 / -1; }.footer-top > p { grid-column: 1 / -1; order: 0; }.footer-links, .social-links { order: 0; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }.hero-image { transition: none; }.reveal, .hero .reveal { animation: none !important; transition: none; opacity: 1; transform: none; }.service-row, .button { transition: none; } }
 
+.footer-top > p { font-size: 15px; }
+.footer-links, .social-links { font-size: 14px; }
+.footer-bottom { font-size: 14px; }
+.footer-bottom span { font-size: inherit; }
+.footer-credit-link { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.footer-credit-link:hover { opacity: .8; }
+
 /* Keep the featured commerce visual in the same aqua-blue language as the main accent. */
 .project-commerce { background: #18284a radial-gradient(circle at 52% 45%, #315ca8, #111e3a 48%, #0d111d 90%); }
 .commerce-orb { background: radial-gradient(circle at 30% 25%, #dbe7ff, var(--project-accent) 12%, #2850a2 42%, #0d1835 75%); }
