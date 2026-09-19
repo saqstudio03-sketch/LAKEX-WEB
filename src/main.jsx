@@ -53,13 +53,22 @@ function Navbar() {
   const [morphed, setMorphed] = useState(false)
   const [open, setOpen] = useState(false)
   useEffect(() => {
+    let frame = 0
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30)
-      setMorphed(window.scrollY > window.innerHeight * 0.7)
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        setScrolled(scrollY > 30)
+        setMorphed(scrollY > window.innerHeight * 0.7)
+        frame = 0
+      })
     }
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
   const close = () => setOpen(false)
   return <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''} ${morphed ? 'navbar-morphed' : ''} ${open ? 'navbar-open' : ''}`}>
@@ -80,7 +89,15 @@ function Navbar() {
 
 function Hero() {
   const [pointer, setPointer] = useState({ x: 50, y: 50 })
-  return <section id="home" className="hero" onMouseMove={(event) => setPointer({ x: (event.clientX / window.innerWidth) * 100, y: (event.clientY / window.innerHeight) * 100 })}>
+  const pointerFrame = useRef(0)
+  const handlePointerMove = (event) => {
+    if (pointerFrame.current) return
+    pointerFrame.current = window.requestAnimationFrame(() => {
+      setPointer({ x: (event.clientX / window.innerWidth) * 100, y: (event.clientY / window.innerHeight) * 100 })
+      pointerFrame.current = 0
+    })
+  }
+  return <section id="home" className="hero" onMouseMove={handlePointerMove}>
     <div className="hero-image" style={{ transform: `scale(1.04) translate(${(pointer.x - 50) * -0.015}%, ${(pointer.y - 50) * -0.015}%)` }} />
     <div className="hero-shade" />
     <div className="hero-orbit orbit-one" />
