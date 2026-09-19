@@ -45,7 +45,7 @@ function useReveal() {
 }
 
 function Logo() {
-  return <a className="logo" href="#home" aria-label="LAKEX home"><span className="logo-mark">L</span><span>LAKEX</span></a>
+  return <a className="logo" href="#home" aria-label="LAKEX home"><img src="/logo.png" alt="LAKEX" /></a>
 }
 
 function Navbar() {
