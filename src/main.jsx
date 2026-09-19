@@ -22,9 +22,9 @@ const services = [
 ]
 
 const projects = [
-  { type: 'APP DEVELOPMENT', title: 'Digital Commerce', description: 'A sharper way to move products and people.', visual: 'commerce', accent: '#1264FF' },
-  { type: 'AI / SOFTWARE', title: 'Smart Mobility', description: 'Smarter systems for faster, calmer decisions.', visual: 'mobility', accent: '#8fe4ff' },
-  { type: 'WEB DEVELOPMENT', title: 'Business Intelligence', description: 'Clarity for decisions that matter.', visual: 'intelligence', accent: '#ffae78' },
+  { type: 'APP DEVELOPMENT', title: 'Digital Commerce', description: 'A sharper way to move products and people.', visual: 'commerce', accent: '#1264FF', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=85' },
+  { type: 'AI / SOFTWARE', title: 'Smart Mobility', description: 'Smarter systems for faster, calmer decisions.', visual: 'mobility', accent: '#8fe4ff', image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1600&q=85' },
+  { type: 'WEB DEVELOPMENT', title: 'Business Intelligence', description: 'Clarity for decisions that matter.', visual: 'intelligence', accent: '#ffae78', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=85' },
 ]
 
 function useReveal() {
@@ -129,13 +129,13 @@ function Services() {
   return <section className="services section" id="services" ref={ref}><div className="container"><SectionIntro kicker="Capabilities" title="What We Do" copy="We turn ideas into intelligent technology. At LakeX, we combine AI, software, hardware, and creative technology to build practical solutions for real-world needs." /><div className="services-list">{services.map((service) => <article className="service-row" key={service.number}><span className="service-number">{service.number}</span><div className="service-name"><h3>{service.title}</h3><p>{service.text}</p></div><span className="service-tag">{service.tag}</span><span className="service-plus"><Plus size={20} /></span></article>)}</div></div></section>
 }
 
-function ProjectVisual({ type, accent }) {
-  return <div className={`project-visual project-${type}`} style={{ '--project-accent': accent }}><div className="visual-noise" /><div className="visual-label">LAKEX / 2026</div>{type === 'commerce' && <><div className="commerce-orb" /><div className="commerce-line line-a" /><div className="commerce-line line-b" /><div className="commerce-card"><span>03</span><b>MOVE / MORE</b><small>Digital commerce system</small></div></>}{type === 'mobility' && <><div className="mobility-map"><i /><i /><i /><i /><i /></div><div className="mobility-route" /><div className="mobility-coordinate">40.7128° N<br />74.0060° W</div></>}{type === 'intelligence' && <><div className="chart-bars"><i /><i /><i /><i /><i /><i /><i /></div><div className="chart-caption">SYSTEM / INSIGHT<br /><strong>94.8%</strong></div><div className="chart-line" /></>}</div>
+function ProjectVisual({ type, accent, image }) {
+  return <div className={`project-visual project-${type}`} style={{ '--project-accent': accent, '--project-image': `url(${image})` }}><div className="visual-noise" /><div className="visual-label">LAKEX / 2026</div>{type === 'commerce' && <><div className="commerce-orb" /><div className="commerce-line line-a" /><div className="commerce-line line-b" /><div className="commerce-card"><span>03</span><b>MOVE / MORE</b><small>Digital commerce system</small></div></>}{type === 'mobility' && <><div className="mobility-map"><i /><i /><i /><i /><i /></div><div className="mobility-route" /><div className="mobility-coordinate">40.7128° N<br />74.0060° W</div></>}{type === 'intelligence' && <><div className="chart-bars"><i /><i /><i /><i /><i /><i /><i /></div><div className="chart-caption">SYSTEM / INSIGHT<br /><strong>94.8%</strong></div><div className="chart-line" /></>}</div>
 }
 
 function Projects() {
   const ref = useReveal()
-  return <section className="projects section container" id="work" ref={ref}><div className="projects-head"><SectionIntro kicker="Selected work" title="Built for the next move." /><a className="text-link" href="#contact">View all projects <ArrowUpRight size={16} /></a></div><div className="project-grid">{projects.map((project, index) => <article className={`project-card project-card-${index + 1}`} key={project.title}><ProjectVisual type={project.visual} accent={project.accent} /><div className="project-info"><p>{project.type}</p><h3>{project.title}</h3><span>{project.description}</span><ArrowUpRight size={18} /></div></article>)}</div></section>
+  return <section className="projects section container" id="work" ref={ref}><div className="projects-head"><SectionIntro kicker="Selected work" title="Built for the next move." /><a className="text-link" href="#contact">View all projects <ArrowUpRight size={16} /></a></div><div className="project-grid">{projects.map((project, index) => <article className={`project-card project-card-${index + 1}`} key={project.title}><ProjectVisual type={project.visual} accent={project.accent} image={project.image} /><div className="project-info"><p>{project.type}</p><h3>{project.title}</h3><span>{project.description}</span><ArrowUpRight size={18} /></div></article>)}</div></section>
 }
 
 function Process() {
@@ -190,7 +190,7 @@ function Contact() {
 }
 
 function Footer() {
-  return <footer className="footer"><div className="container"><div className="footer-top"><Logo /><p>Building digital experiences<br />for what's next.</p><div className="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a></div><div className="social-links"><a href="#contact">Instagram <MoveUpRight size={13} /></a><a href="#contact">LinkedIn <MoveUpRight size={13} /></a><a href="#contact">GitHub <MoveUpRight size={13} /></a></div></div><div className="footer-bottom"><span>© 2026 <a className="footer-credit-link" href="https://saqstudio.in">SAQ STUDIO</a>. All rights reserved.</span><span>Made for what's next <ArrowUpRight size={14} /></span></div></div></footer>
+  return <footer className="footer"><div className="container"><div className="footer-top"><Logo /><p>Building digital experiences<br />for what's next.</p><div className="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a></div><div className="social-links"><a href="https://www.instagram.com/lakex.in?stkn=ZTNhOW1nbmxuc3B0" target="_blank" rel="noreferrer">Instagram <MoveUpRight size={13} /></a><a href="#contact">LinkedIn <MoveUpRight size={13} /></a><a href="#contact">GitHub <MoveUpRight size={13} /></a></div></div><div className="footer-bottom"><span>© 2026 <a className="footer-credit-link" href="https://saqstudio.in">SAQ STUDIO</a>. All rights reserved.</span><span>Made for what's next <ArrowUpRight size={14} /></span></div></div></footer>
 }
 
 function App() {
