@@ -237,7 +237,7 @@ body::before { opacity: .018; }
 .why-item p { color: #e7f2fa; }
 .why::before { color: rgba(255, 255, 255, .04); }
 
-.contact { background: linear-gradient(180deg, #f7fafd 0%, #eef7fc 100%); }
+.contact { background: linear-gradient(180deg, #f1f9fe 0%, #d8effa 52%, #c8e7f5 100%); }
 .contact h2 { color: var(--ink); }
 .contact-email { color: var(--blue); border-color: rgba(8, 120, 209, .3); }
 .contact-form { border-color: var(--blue-line); background: #fff; box-shadow: 0 14px 40px rgba(6, 42, 74, .07); }
@@ -322,10 +322,25 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
   .stat { font-size: 12px; letter-spacing: .03em; }
 }
 
-.footer { background: linear-gradient(180deg, #eef7fc 0%, #dceff8 100%); border-color: #c8e0ec; }
+.footer { background: linear-gradient(180deg, #c8e7f5 0%, #b9dff0 55%, #9fcfe5 100%); border-top: 0; }
 .footer-top > p { color: #526d82; }
 .footer-links, .social-links { color: var(--ink); }
 .footer-links a:hover, .social-links a:hover { color: var(--blue); }
 .social-links svg { color: var(--blue); }
-.footer-bottom { color: #58758a; border-color: #c8e0ec; }
-.footer-bottom span:last-child { color: #42647c; }
+.footer-bottom { color: #3f637a; border-color: rgba(63, 99, 122, .2); }
+.footer-bottom span:last-child { color: #31576f; }
+
+.process { padding: 120px 0; background: linear-gradient(180deg, #eef7fc 0%, #f7fafd 100%); }
+.process .section-intro { margin-bottom: 42px; padding-bottom: 32px; }
+.process-grid { gap: 16px; }
+.process-step { min-height: 220px; margin: 0; padding: 24px; border: 1px solid var(--blue-line); border-radius: 20px; background: #fff; box-shadow: 0 8px 24px rgba(6, 42, 74, .045); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.process-step:hover { transform: translateY(-5px); border-color: #9eddf0; box-shadow: 0 16px 34px rgba(8, 120, 209, .12); }
+.process-step > span { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 24px; border-radius: 999px; background: var(--paper-blue); font-weight: 700; }
+.process-step h3 { margin: 34px 0 10px; color: var(--ink); font-size: 22px; }
+.process-step p { max-width: none; color: var(--body-muted); font-size: 13px; line-height: 1.65; }
+.process-step svg { color: var(--blue); }
+@media (max-width: 480px) {
+  .process { padding: 96px 0; }
+  .process-step { min-height: 180px; padding: 20px; }
+  .process-step h3 { margin-top: 24px; font-size: 19px; }
+}
