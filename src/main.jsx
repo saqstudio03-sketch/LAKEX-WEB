@@ -120,8 +120,26 @@ function SectionIntro({ kicker, title, copy, id }) {
 
 function About() {
   const ref = useReveal()
-  return <section className="about section container" ref={ref} id="about"><div className="about-grid"><SectionIntro kicker="About LAKEX" title={<>
-Building technology<br /><em>for the real world.</em></>} copy="LakeX is an AI-first technology company focused on turning ideas and real-world problems into practical technology solutions. We build across Artificial Intelligence, Software, Mobile Applications, IoT, Smart Hardware, Data, and Creative Technology, helping businesses, organizations, and individuals use emerging technology in meaningful ways." /><div className="about-visual"><div className="signal-grid" /><div className="signal-ring ring-large" /><div className="signal-ring ring-small" /><div className="signal-core"><span>LKX</span><i /></div><p>AI-FIRST / FUTURE READY</p><span className="visual-coordinate">Starting from Kerala<br />Built for a global mindset</span></div></div><div className="stat-row">{['AI-first', 'Software', 'Mobile apps', 'IoT & data'].map((stat, index) => <div className="stat" key={stat}><span>0{index + 1}</span><strong>{stat}</strong><ArrowUpRight size={16} /></div>)}</div></section>
+  return <section className="about section container" ref={ref} id="about">
+    <div className="about-bg" aria-hidden="true"><span className="about-wave about-wave-1" /><span className="about-wave about-wave-2" /><span className="about-wave about-wave-3" /></div>
+    <div className="about-grid">
+      <div className="about-copy reveal">
+        <SectionIntro kicker="About LAKEX" title={<>Building technology<br /><em>for the real world.</em></>} copy="LakeX is an AI-first technology company focused on turning ideas and real-world problems into practical technology solutions. We build across Artificial Intelligence, Software, Mobile Applications, IoT, Smart Hardware, Data, and Creative Technology, helping businesses, organizations, and individuals use emerging technology in meaningful ways." />
+        <a className="about-cta" href="#services">Learn more <ArrowUpRight size={15} /></a>
+      </div>
+      <div className="about-visual reveal">
+        <span className="panel-glow" aria-hidden="true" />
+        <span className="panel-grid" aria-hidden="true" />
+        <span className="panel-orbit panel-orbit-1" aria-hidden="true" />
+        <span className="panel-orbit panel-orbit-2" aria-hidden="true" />
+        <span className="panel-dot panel-dot-1" aria-hidden="true" />
+        <span className="panel-dot panel-dot-2" aria-hidden="true" />
+        <span className="panel-dot panel-dot-3" aria-hidden="true" />
+        <img className="about-illustration" src="/about.png" alt="LakeX technology ecosystem illustration" />
+      </div>
+    </div>
+    <div className="stat-row">{['AI-first', 'Software', 'Mobile apps', 'IoT & data'].map((stat, index) => <div className="stat" key={stat}><span>0{index + 1}</span><strong>{stat}</strong><ArrowUpRight size={16} /></div>)}</div>
+  </section>
 }
 
 function Team() {
