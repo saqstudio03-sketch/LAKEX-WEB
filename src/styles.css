@@ -60,7 +60,7 @@ a { color: inherit; text-decoration: none; } button, input, textarea { font: inh
 .intro-copy { max-width: 410px; color: var(--muted); font-size: 14px; line-height: 1.8; margin: 33px 0 0; }
 .about { padding-top: 190px; background: linear-gradient(180deg, var(--bg) 0%, #061525 100%); }
 .about-grid { display: grid; grid-template-columns: 1fr .92fr; gap: 12%; align-items: center; }
-.about-visual { height: 480px; border: 1px solid rgba(88, 186, 255, .2); border-radius: 22px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(6, 26, 51, .18), rgba(8, 120, 209, .08)), url('/about.png') center/cover; box-shadow: inset 0 0 80px rgba(25, 211, 230, .04), 0 25px 90px rgba(0, 0, 0, .18); }
+.about-visual { height: 480px; position: relative; overflow: hidden; background: url('/about.png') center/cover; -webkit-mask-image: radial-gradient(ellipse 105% 105% at 50% 50%, #000 50%, transparent 95%); mask-image: radial-gradient(ellipse 105% 105% at 50% 50%, #000 50%, transparent 95%); }
 .about-visual::before { content: ''; position: absolute; width: 1px; height: 100%; background: var(--line); left: 50%; }
 .about-visual::after { content: ''; position: absolute; width: 100%; height: 1px; background: var(--line); top: 50%; }
 .signal-grid { position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(rgba(88, 186, 255, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(88, 186, 255, .07) 1px, transparent 1px); background-size: 48px 48px; }
@@ -189,7 +189,7 @@ body::before { opacity: .018; }
 .eyebrow { color: var(--blue); }
 .eyebrow-dot { background: var(--blue); box-shadow: 0 0 12px rgba(22, 135, 245, .45); }
 .about-grid { gap: 9%; }
-.about-visual { border-color: #cfe5f2; background: linear-gradient(135deg, rgba(6, 26, 51, .12), rgba(8, 120, 209, .06)), url('/about.png') center/cover; box-shadow: 0 20px 55px rgba(6, 42, 74, .1); }
+.about-visual { box-shadow: none; }
 .about-visual::before, .about-visual::after { background: rgba(8, 120, 209, .16); }
 .signal-grid { background-image: linear-gradient(rgba(8, 120, 209, .09) 1px, transparent 1px), linear-gradient(90deg, rgba(8, 120, 209, .09) 1px, transparent 1px); }
 .signal-ring { border-color: rgba(8, 120, 209, .5); }
