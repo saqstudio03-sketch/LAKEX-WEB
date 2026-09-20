@@ -11,7 +11,7 @@ $graphics = [System.Drawing.Graphics]::FromImage($bmp)
 $graphics.DrawImage($sourceImage, 0, 0, $w, $h)
 $graphics.Dispose()
 $sourceImage.Dispose()
-Write-Output "Loaded $w x $h"
+
 $rect = New-Object System.Drawing.Rectangle(0, 0, $w, $h)
 $data = $bmp.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadWrite, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
 $bytes = New-Object byte[] ($w * $h * 4)
@@ -19,6 +19,8 @@ $bytes = New-Object byte[] ($w * $h * 4)
 $bmp.UnlockBits($data)
 
 $total = $w * $h
+
+# ---- Pass 1: flood fill exterior near-white (aggressive threshold) ----
 $removed = New-Object bool[] $total
 $stack = New-Object 'System.Collections.Generic.Stack[int]'
 for ($x = 0; $x -lt $w; $x++) { $stack.Push($x); $stack.Push(($h - 1) * $w + $x) }
@@ -29,7 +31,7 @@ while ($stack.Count -gt 0) {
   if ($removed[$i]) { continue }
   $o = $i * 4
   $b = $bytes[$o]; $g = $bytes[$o + 1]; $r = $bytes[$o + 2]; $a = $bytes[$o + 3]
-  if ($a -eq 0 -or ($r -ge 244 -and $g -ge 244 -and $b -ge 244)) {
+  if ($a -eq 0 -or ($r -ge 238 -and $g -ge 238 -and $b -ge 238)) {
     $removed[$i] = $true
     $bytes[$o + 3] = 0
     $x = $i % $w
@@ -41,29 +43,40 @@ while ($stack.Count -gt 0) {
   }
 }
 
-# Feather anti-aliased edges: pixels near white touching a removed pixel get proportional alpha.
-$feathered = 0
-for ($i = 0; $i -lt $total; $i++) {
-  if ($removed[$i]) { continue }
-  $o = $i * 4
-  if ($bytes[$o + 3] -eq 0) { continue }
-  $r = $bytes[$o + 2]; $g = $bytes[$o + 1]; $b = $bytes[$o]
-  $m = [math]::Min($r, [math]::Min($g, $b))
-  if ($m -ge 225) {
-    $x = $i % $w
-    $y = [math]::Floor($i / $w)
-    $adjT = $false
-    if (($x -gt 0 -and $removed[$i - 1]) -or ($x -lt $w - 1 -and $removed[$i + 1]) -or ($y -gt 0 -and $removed[$i - $w]) -or ($y -lt $h - 1 -and $removed[$i + $w])) { $adjT = $true }
-    if ($adjT) {
-      $bytes[$o + 3] = [int][math]::Min(255, [math]::Max(0, (255 - $m) * 12))
-      $feathered++
+# ---- Pass 2: BFS halo fade from the removed region, travelling only through pale pixels ----
+$distArr = New-Object int[] $total
+$queue = New-Object 'System.Collections.Generic.Queue[int]'
+for ($i = 0; $i -lt $total; $i++) { if ($removed[$i]) { $queue.Enqueue($i) } }
+$maxD = 44
+$haloSoftened = 0
+while ($queue.Count -gt 0) {
+  $i = $queue.Dequeue()
+  $d = $distArr[$i]
+  if ($d -ge $maxD) { continue }
+  $x = $i % $w
+  $y = [math]::Floor($i / $w)
+  $factor = 1.0 - ($d / ($maxD + 6))
+  foreach ($n in @(($i - 1), ($i + 1), ($i - $w), ($i + $w))) {
+    if ($n -lt 0 -or $n -ge $total) { continue }
+    if ($removed[$n]) { continue }
+    $nx = $n % $w
+    if ([math]::Abs($nx - $x) -gt 1) { continue }  # skip horizontal wrap
+    $o = $n * 4
+    $m = [math]::Min($bytes[$o], [math]::Min($bytes[$o + 1], $bytes[$o + 2]))
+    if ($m -lt 200) { continue }  # stop at saturated artwork content
+    if ($distArr[$n] -ne 0) { continue }
+    $distArr[$n] = $d + 1
+    if ($m -ge 212 -and $bytes[$o + 3] -gt 0) {
+      $newAlpha = [int][math]::Min(255, [math]::Max(0, (238 - $m) * 16 * $factor))
+      if ($newAlpha -lt $bytes[$o + 3]) { $bytes[$o + 3] = $newAlpha; $haloSoftened++ }
     }
+    $queue.Enqueue($n)
   }
 }
 
 $removedCount = 0
 foreach ($v in $removed) { if ($v) { $removedCount++ } }
-Write-Output ("Removed {0:P1} of pixels (exterior white). Feathered {1} edge pixels." -f ($removedCount / $total), $feathered)
+Write-Output ("Flood-filled {0:P1} of pixels. Softened {1} halo pixels." -f ($removedCount / $total), $haloSoftened)
 
 $data2 = $bmp.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadWrite, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
 [System.Runtime.InteropServices.Marshal]::Copy($bytes, 0, $data2.Scan0, $bytes.Length)
@@ -76,4 +89,4 @@ $corner = $check.GetPixel(2, 2)
 $center = $check.GetPixel([int]($check.Width / 2), [int]($check.Height / 2))
 Write-Output "Corner alpha: $($corner.A) | Center alpha: $($center.A)"
 $check.Dispose()
-Write-Output "Saved transparent background version to $path"
+Write-Output "Saved to $path"
